@@ -1,0 +1,29 @@
+From dd8917eafdd2fee7f8ecaae46bb58bb737fa016f Mon Sep 17 00:00:00 2001
+From: Michael Gehring <mg@ebfe.org>
+Date: Thu, 8 Feb 2018 23:25:59 +0100
+Subject: [PATCH] Revert "core-services/00-pseudofs.sh: Add securityfs
+ mountpoint - Needed for LSM support"
+
+This was at some point in time intended for
+voidlinux/void-packages#6009, which seems abandoned.
+
+This reverts commit fae8defa213dbeed39379b92144ae5a1e302e089.
+---
+ core-services/00-pseudofs.sh | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git core-services/00-pseudofs.sh core-services/00-pseudofs.sh
+index 1ae7398..3df155f 100644
+--- core-services/00-pseudofs.sh
++++ core-services/00-pseudofs.sh
+@@ -8,7 +8,6 @@ mountpoint -q /dev || mount -o mode=0755,nosuid -t devtmpfs dev /dev
+ mkdir -p -m0755 /run/runit /run/lvm /run/user /run/lock /run/log /dev/pts /dev/shm
+ mountpoint -q /dev/pts || mount -o mode=0620,gid=5,nosuid,noexec -n -t devpts devpts /dev/pts
+ mountpoint -q /dev/shm || mount -o mode=1777,nosuid,nodev -n -t tmpfs shm /dev/shm
+-mountpoint -q /sys/kernel/security || mount -n -t securityfs securityfs /sys/kernel/security
+ 
+ if [ -z "$VIRTUALIZATION" ]; then
+     mountpoint -q /sys/fs/cgroup || mount -o mode=0755 -t tmpfs cgroup /sys/fs/cgroup
+-- 
+2.16.1
+
