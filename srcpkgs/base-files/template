@@ -23,7 +23,8 @@ conf_files="
 	/etc/group
 	/etc/fstab
 	/etc/crypttab
-	/etc/nsswitch.conf"
+	/etc/nsswitch.conf
+	/etc/sysctl.d/void.conf"
 
 replaces="base-directories>=0"
 # New system groups
@@ -56,7 +57,7 @@ do_install() {
 	vinstall ${FILESDIR}/usb-load-ehci-first 644 usr/lib/modprobe.d usb-load-ehci-first.conf
 	vinstall ${FILESDIR}/blacklist.conf 644 usr/lib/modprobe.d
 	# sysctl(8) files
-	vinstall ${FILESDIR}/sysctl.conf 644 usr/lib/sysctl.d void.conf
+	vinstall ${FILESDIR}/sysctl.conf 644 etc/sysctl.d void.conf
 
 	# Install common licenses, from Debian.
 	vmkdir usr/share/licenses
