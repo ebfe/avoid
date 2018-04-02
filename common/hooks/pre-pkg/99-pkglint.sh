@@ -32,10 +32,10 @@ hook() {
 		fi
 	done
 
-	# Forbid empty packages unless build_style=meta
-	if [ "$build_style" != "meta" ]; then
+	# Forbid empty packages unless nofiles is set
+	if [ -z "$nofiles" ]; then
 		if [ "$(find $PKGDESTDIR/* -maxdepth 1 -type d 2>/dev/null)" = "" ]; then
-			msg_red "${pkgver}: PKGDESTDIR is empty and build_style != meta\n"
+			msg_red "${pkgver}: PKGDESTDIR is empty and nofiles not set\n"
 			error=1
 		fi
 	fi

@@ -581,6 +581,8 @@ Example:
 A list is composed of three components separated by a colon: group, symlink and target.
 i.e `alternatives="vi:/usr/bin/vi:/usr/bin/nvi ex:/usr/bin/ex:/usr/bin/nvi-ex"`.
 
+- `nofiles` If set, allows the creation of empty packages. This should only be used for meta subpackages, main packages should use build_style="meta".
+
 - `font_dirs` A white space separated list of directories specified by an absolute path where a
 font package installs its fonts.  
 It is used in the `x11-fonts` xbps-trigger to rebuild the font cache during install/removal
