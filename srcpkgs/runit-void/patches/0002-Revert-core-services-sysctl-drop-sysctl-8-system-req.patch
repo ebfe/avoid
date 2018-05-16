@@ -1,0 +1,66 @@
+From b084b7433e7a48fbd4abd2e095f73260e0b7c1e9 Mon Sep 17 00:00:00 2001
+From: Michael Gehring <mg@ebfe.org>
+Date: Mon, 2 Apr 2018 16:19:29 +0000
+Subject: [PATCH 2/2] Revert "core-services/sysctl: drop sysctl(8) --system
+ requirement."
+
+This reverts commit 5f719f131c3d75a99f1a09d4cd7ccccc1534a100.
+---
+ README.md                  |  2 +-
+ core-services/08-sysctl.sh | 28 +++++++++++++++++-----------
+ 2 files changed, 18 insertions(+), 12 deletions(-)
+
+diff --git a/README.md b/README.md
+index 484fecb..e6f2f1c 100644
+--- a/README.md
++++ b/README.md
+@@ -9,7 +9,7 @@ difference that I'm trying to avoid the bash dependency.
+ 
+ - A POSIX shell
+ - A POSIX awk
+-- procps-ng (needs pkill -s0,1)
++- procps-ng (needs pkill -s0,1 and sysctl --system)
+ - runit
+ 
+ ### How to use it
+diff --git a/core-services/08-sysctl.sh b/core-services/08-sysctl.sh
+index 37d7b9f..10aa73a 100644
+--- a/core-services/08-sysctl.sh
++++ b/core-services/08-sysctl.sh
+@@ -1,16 +1,22 @@
+ # vim: set ts=4 sw=4 et:
+ 
+ if [ -x /sbin/sysctl -o -x /bin/sysctl ]; then
+-    msg "Loading sysctl(8) settings..."
+-    for i in /run/sysctl.d/*.conf \
+-        /etc/sysctl.d/*.conf \
+-        /usr/local/lib/sysctl.d/*.conf \
+-        /usr/lib/sysctl.d/*.conf \
+-        /etc/sysctl.conf; do
++    msg "Loading sysctl(8) settings...\n"
+ 
+-        if [ -e "$i" ]; then
+-            printf '* Applying %s ...\n' "$i"
+-            sysctl -p "$i"
+-        fi
+-    done
++    if sysctl -V >/dev/null 2>&1; then
++        sysctl --system
++    else
++        # Fallback for busybox sysctl
++        for i in /run/sysctl.d/*.conf \
++            /etc/sysctl.d/*.conf \
++            /usr/local/lib/sysctl.d/*.conf \
++            /usr/lib/sysctl.d/*.conf \
++            /etc/sysctl.conf; do
++
++            if [ -e "$i" ]; then
++                printf '* Applying %s ...\n' "$i"
++                sysctl -p "$i"
++            fi
++        done
++    fi
+ fi
+-- 
+2.17.0
+
