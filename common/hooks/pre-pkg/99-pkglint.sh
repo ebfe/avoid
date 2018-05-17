@@ -2,7 +2,7 @@
 
 hook() {
 	local error=0 filename= rev= libname= conflictPkg= conflictFile=
-	local conflictRev= ignore= found= mapshlibs=$XBPS_COMMONDIR/shlibs
+	local conflictRev= ignore= found= mapshlibs=$XBPS_SRCPKGDIR/shlibs
 
 	set +E
 
@@ -71,7 +71,7 @@ hook() {
 					continue
 				fi
 				msg_red "${pkgver}: SONAME bump detected: ${libname}.so.${conflictRev} -> ${libname}.so.${rev}\n"
-				msg_red "${pkgver}: please update common/shlibs with this line: \"${libname}.so.${rev} ${pkgver}\"\n"
+				msg_red "${pkgver}: please update ${XBPS_SRCPKGDIR}/shlibs with this line: \"${libname}.so.${rev} ${pkgver}\"\n"
 				msg_red "${pkgver}: all reverse dependencies should also be revbumped to be rebuilt against ${libname}.so.${rev}:\n"
 				_revdeps=$($XBPS_QUERY_XCMD -Rs ${libname}.so -p shlib-requires|awk '{print $1}')
 				for x in ${_revdeps}; do
@@ -95,7 +95,7 @@ hook() {
 			if [ -z "$found" ]; then
 				_myshlib="${libname}.so"
 				[ "${_myshlib}" != "${rev}" ] && _myshlib+=".${rev}"
-				msg_warn "${pkgver}: ${_myshlib} not found in common/shlibs!\n"
+				msg_warn "${pkgver}: ${_myshlib} not found in ${XBPS_SRCPKGDIR}/shlibs!\n"
 			fi;
 		}
 	done

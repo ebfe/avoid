@@ -934,10 +934,10 @@ sets up the `<SONAME> <pkgname>>=<version>` mappings.
 For example the `foo-1.0_1` package provides the `libfoo.so.1` SONAME and
 software requiring this library will link to `libfoo`; the resulting binary
 package will have a run-time dependency to `foo>=1.0_1` package as specified in
-`common/shlibs`:
+`srcpkgs/shlibs`:
 
 ```
-# common/shlibs
+# srcpkgs/shlibs
 ...
 libfoo.so.1 foo-1.0_1
 ...

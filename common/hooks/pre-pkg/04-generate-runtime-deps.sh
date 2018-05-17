@@ -54,7 +54,7 @@ hook() {
     # error via msg_error().
     trap - ERR
 
-    mapshlibs=$XBPS_COMMONDIR/shlibs
+    mapshlibs=$XBPS_SRCPKGDIR/shlibs
 
     if [ -n "$noarch" -o -n "$noverifyrdeps" ]; then
         store_pkgdestdir_rundeps
@@ -97,7 +97,7 @@ hook() {
 
     #
     # Add required run time packages by using required shlibs resolved
-    # above, the mapping is done thru the mapping_shlib_binpkg.txt file.
+    # above, the mapping is done thru the shlibs file.
     #
     for f in ${verify_deps}; do
         unset _f j rdep _rdep rdepcnt soname _pkgname _rdepver found
@@ -148,7 +148,7 @@ hook() {
             continue
         fi
         # Check if pkg is a subpkg of sourcepkg; if true, ignore version
-        # in common/shlibs.
+        # in shlibs.
         _sdep="${_pkgname}>=${_rdepver}"
         for _subpkg in ${subpackages}; do
             if [ "${_subpkg}" = "${_pkgname}" ]; then
