@@ -19,7 +19,7 @@ nocross=yes
 
 gnome-tweak-tool_package() {
 	noarch=yes
-	build_style=meta
+	nofiles=yes
 	depends="gnome-tweaks>=${version}_${revision}"
 	short_desc+=" (transitional dummy package)"
 }

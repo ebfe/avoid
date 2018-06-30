@@ -31,7 +31,7 @@ liblz4-devel_package() {
 	}
 }
 lz4-devel_package() {
-	build_style=meta
+	nofiles=yes
 	short_desc="LZ4 compression library - development files (transitional dummy package)"
 	depends="liblz4-devel>=${version}_${revision}"
 }

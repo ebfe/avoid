@@ -49,7 +49,7 @@ libzstd-devel_package() {
 }
 
 zstd-devel_package() {
-	build_style=meta
+	nofiles=yes
 	short_desc="Fast real-time compression algorithm - development files (transitional dummy package)"
 	depends="libzstd-devel>=${version}_${revision}"
 }

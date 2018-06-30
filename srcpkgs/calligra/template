@@ -32,7 +32,8 @@ CXXFLAGS="-DKDE_NO_DEBUG_OUTPUT"
 # cmake doesn't detect the functions correctly
 pre_build() {
 	case $XBPS_TARGET_MACHINE in
-		*-musl) cat >> build/filters/words/msword-odf/wv2/src/config.h <<_EOF
+	*-musl)
+		cat >>build/filters/words/msword-odf/wv2/src/config.h <<_EOF
 #define HAVE_FUNC_ISNAN 1
 #define HAVE_FUNC_ISINF 1
 #define HAVE_FUNC_ISFINITE 1
@@ -77,7 +78,7 @@ calligra-karbon_package() {
 	}
 }
 calligra-kexi_package() {
-	build_style=meta
+	nofiles=yes
 	depends="kexi"
 	short_desc+=" - Develop desktop db apps (transitional dummy package)"
 }
@@ -91,7 +92,7 @@ calligra-stage_package() {
 	}
 }
 calligra-krita_package() {
-	build_style=meta
+	nofiles=yes
 	short_desc+=" - Edit and paint images (transitional dummy package)"
 	depends="krita>=${version}_${revision}"
 }
@@ -113,7 +114,7 @@ calligra-words_package() {
 	}
 }
 calligra-handbook_package() {
-	build_style=meta
+	nofiles=yes
 	noarch=yes
 	short_desc+=" - Documentation (removed temporarily)"
 	#pkg_install() {

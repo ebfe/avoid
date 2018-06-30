@@ -11,7 +11,7 @@ homepage="https://upower.freedesktop.org"
 license="GPL-2"
 
 upower0-devel_package() {
-	build_style=meta
+	nofiles=yes
 	short_desc+=" - development files"
 	depends="upower-devel>=${version}_${revision}"
 }

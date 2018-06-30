@@ -16,7 +16,7 @@ depends="
 
 python3-jupyter_package() {
 	noarch=yes
-	build_style=meta
+	nofiles=yes
 	short_desc="${short_desc/Python2/Python3}"
 	depends="
 		python3-jupyter_notebook

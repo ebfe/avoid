@@ -20,7 +20,7 @@ if [ -n "$CROSS_BUILD" ]; then
 fi
 
 konsole5_package() {
-	build_style=meta
+	nofiles=yes
 	short_desc+=" (transitional dummy package)"
 	depends="konsole>=${version}_${revision}"
 }

@@ -15,12 +15,12 @@ distfiles="https://github.com/monero-project/monero-gui/archive/v${version}.tar.
 checksum=ec2fc70babea7f838ab637e8932f55770f6992d92a10d8ddc2510a47a8de784d
 
 pre_configure() {
-	echo "var GUI_VERSION = \"${version}\"" > version.js
-	echo "var GUI_MONERO_VERSION = \"${version}\"" >> version.js
+	echo "var GUI_VERSION = \"${version}\"" >version.js
+	echo "var GUI_MONERO_VERSION = \"${version}\"" >>version.js
 	case "$XBPS_TARGET_MACHINE" in
-		armv[56]*) # armv[56]* need to link libatomic.a for __atomic_fetch_sub_8
-			sed -i *.pro -e "s;-leasylogging ;-leasylogging -latomic ;"
-			;;
+	armv[56]*) # armv[56]* need to link libatomic.a for __atomic_fetch_sub_8
+		sed -i *.pro -e "s;-leasylogging ;-leasylogging -latomic ;"
+		;;
 	esac
 }
 
@@ -42,7 +42,7 @@ do_install() {
 }
 
 monero-core_package() {
-	build_style=meta
+	nofiles=yes
 	depends="monero-gui>=${version}_${revision}"
 	short_desc+=" (transitional dummy package)"
 }
