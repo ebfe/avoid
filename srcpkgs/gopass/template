@@ -4,6 +4,7 @@ version=1.8.2
 revision=2
 build_style=go
 go_import_path=github.com/gopasspw/gopass
+hostmakedepends="dep"
 makedepends="gnupg2"
 depends="gnupg2 git"
 short_desc="The slightly more awesome standard unix password manager for teams"
@@ -14,12 +15,16 @@ changelog="https://raw.githubusercontent.com/justwatchcom/gopass/master/CHANGELO
 distfiles="https://github.com/gopasspw/gopass/archive/v${version}.tar.gz"
 checksum=6dc423448c0672fd5087ab75e4c3d8584fb75c93789c9fd68bf14576ab46d1ed
 
-broken="go-1.11/runtime.support_avx2"
-
 if [ "$CROSS_BUILD" ]; then
 	# Depend on system gopass to generate completions
 	hostmakedepends="gopass"
 fi
+
+pre_build() {
+	cd ${GOSRCPATH}
+	# locked x/crypto doesn't build with go-1.11
+	dep ensure -update golang.org/x/crypto
+}
 
 post_build() {
 	local GOPASS=${GOPATH}/bin/gopass
